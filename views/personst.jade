@@ -1,0 +1,26 @@
+//
+   Created by Vlad on 22-Dec-16.
+
+//
+   Created by Vlad on 22-Dec-16.
+link(href='/stylesheets/style.css', rel='stylesheet')
+table
+    thead
+        tr.head
+        th First name
+        th Last name
+        th age
+        th group
+    tbody
+        - var i = -1
+        each val, key in persons
+            - ++i
+            tr(class=(i % 2 == 0) ? 'odd' : 'even')
+            td #{val.firstname}
+            td(style="text-align:left") #{val.lastname}
+            td #{val.age}
+            td #{val.group}
+
+//table(class="scroll")  -- pentru scroll daca-s multe persoane
+
+
