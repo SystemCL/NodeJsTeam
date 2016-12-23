@@ -1,100 +1,55 @@
+//lets require/import the mongodb native drivers.
+var mongodb = require('mongodb');
+var express = require('express');
+var app = express();
 
-// Create UDP Server
-var dgram = require('dgram');
-var socketUDP = dgram.createSocket({type:'udp4', reuseAddr: true });//createSocket('udp4');
+//We need to work with "MongoClient" interface in order to connect to a mongodb server.
+var mongoClient = mongodb.MongoClient;
+
+// Connection URL. This is where your mongodb server is running.
+var url = 'mongodb://localhost:27017/mydb';
+
+var str = "";
+
+app.route('/persons').get(function(req,res){
+  mongoClient.connect(url, function(err, db){
+    var cursor = db.collection('persons').find({});
+      cursor.each(function(err,item){
+          if(item != null){
+            str = str + "&nbsp;&nbsp;&nbsp;&nbsp;" + item.firstname + "</br>";
+          }
+      });
+      res.send(str);
+      //var cursor = collection.find({});
+  });
 
 
-var multicastAddress = '239.1.2.3';
-var multicastPort = 5001;
-var sockets = [];
-
-var args = process.argv.slice(2);
-console.log("argumente: " + args);
-
-var connections = JSON.parse("[" + args[0] + "]");
-var portTcp = args[1];
-
-//console.log(connections)
-//var info = JSON.parse( args[1] );
-//console.log(args[1]);
-
-
-socketUDP.bind(multicastPort, '0.0.0.0',function(){
-    socketUDP.addMembership('239.1.2.3');
 });
 
+var server = app.listen(8081,function(){});
+/*
+// Use connect method to connect to the Server
+mongoClient.connect(url, function (err, db) {
+    if (err) {
+        console.log('Unable to connect to the mongoDB server. Error:', err);
+    } else {
+        console.log('Connection established to', url);
+// Get the documents collection
+        var collection = db.collection('persons');
+        collection.find({}).toArray(function (err, result) {
+            if (err) {
+                console.log(err);
+            } else if (result.length) {
+                console.log('Found:', JSON.stringify(result));
+            } else {
+                console.log('No document(s) found with defined "find" criteria!');
+            }
+            //Close connection
+            //db.close();
+        });
+        // do some work here with the database.
 
-// TCP Module
-const net = require('net');
-
-socketUDP.on("message", function ( data, rinfo ) {
-    console.log("Give nr of nodes", rinfo.address, " : ", JSON.parse(data));
-    var data = JSON.parse(data);
-    //console.log("> ", data);
-
-    switch (data.type) {
-        case "get_info":
-
-            var response = {};
-            response.type = "post";
-            response.connetions = "4";
-
-            const nodeTCP = new net.Socket();
-            nodeTCP.connect(data.port, function () {
-                console.log("Connected to client");
-                nodeTCP.write(JSON.stringify(response));
-            });
-
-            nodeTCP.on('data', function (data) {
-                var msg = JSON.parse(data);
-                console.log(msg);
-            });
-
-
-            break;
-
+        //Close connection
+        //db.close();
     }
-});
-
-
-
-/*
-server.createServer( function(socket){
-    // Identify name of client
-    socket.name = socket.remoteAddress + ":" + socket.remotePort;
-    console.log("New connection > " + socket.name);
-
-    // add socket to connection array
-    sockets.push(socket);
-
-    socket.on('data', function(data){
-
-        var msg = JSON.parse(data);
-    });
-
-
-}).listen(8000);
-*/
-
-
-
-/*
-function connectionHandler(socket){
-
-    sockets.append(socket);
-
-    socketTCP.on('data', function () {
-        var msg = JSON.parse(data);
-        console.log(msg);
-    });
-
-    socketTCP.on('error', function () {
-
-    });
-}
-
-connections.forEach(function (item, index, array) {
-    socketTCP.createServer(connectionHandler).listen(item);
-    console.log('Connected to: ' + item);
-});
-*/
+});*/
