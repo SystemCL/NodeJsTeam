@@ -1,8 +1,9 @@
+
 //lets require/import the mongodb native drivers.
 var mongodb = require('mongodb');
 var express = require('express');
 var app = express();
-
+var PORT = 8081;
 
 //We need to work with "MongoClient" interface in order to connect to a mongodb server.
 var mongoClient = mongodb.MongoClient;
@@ -17,7 +18,12 @@ app.route('/persons').get(function(req,res){
         var cursor = db.collection('persons').find({});
         cursor.each(function(err,item){
             if(item != null){
-                str = str + "&nbsp;&nbsp;&nbsp;&nbsp;" + item.firstname + "</br>";
+                str = str + "{" +
+                    item.firstname + ","
+                    + item.lastname + ","
+                    + item.age + ","
+                    + item.group + ","
+                    + item.sex + "}";
             }
         });
         res.send(str);
@@ -26,7 +32,9 @@ app.route('/persons').get(function(req,res){
 
 });
 
-var server = app.listen(8081,function(){});
+var server = app.listen(PORT,function(){
+    console.log("DataWareHouse listening on: http://localhost:%s", PORT);
+});
 /*
  // Use connect method to connect to the Server
  mongoClient.connect(url, function (err, db) {
@@ -53,3 +61,30 @@ var server = app.listen(8081,function(){});
  //db.close();
  }
  });*/
+/*
+//Lets require/import the HTTP module
+var http = require('http');
+
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/mydb');
+
+
+const PORT=9000;
+
+
+//We need a function which handles requests and send response
+function handleRequest(request, response){
+        response.writeHeader(200, {"Content-Type": "text/html"});
+        response.write("raspunsul");
+        response.end();
+}
+
+//Create a server
+var server = http.createServer(handleRequest);
+
+//Lets start our server
+server.listen(PORT, function(){
+    //Callback triggered when server is successfully listening. Hurray!
+    console.log("DataWareHouse listening on: http://localhost:%s", PORT);
+}); */
