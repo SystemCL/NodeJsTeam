@@ -1,7 +1,10 @@
 //Lets require/import the HTTP module
 var http = require('http');
 
-//var db = require(); -> vlad
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/mydb');
+
 
 const PORT=9000;
 
