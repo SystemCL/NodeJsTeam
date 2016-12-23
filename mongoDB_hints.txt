@@ -1,0 +1,86 @@
+Run in cmd(Admin priv): D:\MongoDB\Server\3.4\bin\mongod.exe
+
+Run in another cmd(Admin priv):  D:\MongoDB\Server\3.4\bin\mongo.exe
+
+use database_name (for create database database_name)
+
+db (to view wich database in current)
+
+show dbs (show all databases)
+
+db.person.insert({"firstname":"Ploaia","lastname":"Vladislav"})
+
+db.dropDatabase()  --delete current database
+
+db.createCollection("mycollection")   -- for create an collection (person = collection)
+
+show collections -- display all collections
+
+db.mycollection.drop()  -- delete mycollection collection
+
+db.persons.insert([
+                   {
+                     "firstname":"Ploaia",
+                     "lastname":"Vladislav",
+                     "age": 22,
+                     "group":"FI-131"
+                   }
+                  ])
+
+db.persons.find()   -- select from collection
+
+db.persons.find().pretty()  -- select from collection in formatted way
+
+db.persons.find({$and:[{"firstname":"Ploaia"}]}).pretty()  --select with where and
+                                                           firstname = Ploaia
+
+
+db.persons.find({$or:[{"firstname":"Tabirta", "lastname":"Adrian1"}]}).pretty()  --select with where or
+                                                           firstname = Tabirta or lastname = "Adrian1"
+
+db.persons.find({"age": {$gt:22}}).pretty()   
+             --select all students where age>22
+
+
+db.persons.update({"lastname":"Adrian1"},{$set:{"lastname":"Petru"}})  -- update from Adrian1 to Petru
+
+
+db.persons.update({"lastname":"Adrian1"},{$set:{"lastname":"Petru"}},{multi:true})
+             -- update multiple records wich contains Adrian1 to Petru
+
+db.persons.remove({"lastname":"Petru"}) -- delete document from collection with lastname = Petru
+
+db.persons.remove()  -- delete all documents from collection
+
+
+
+----------------------Asta o sa trebuiasca pentru request + de adaugat where and..
+
+ db.persons.find({},{"firstname":1,_id:0, })  
+
+           -- select all firstname from collection 
+                1 - display key value
+                0 - hide key value 
+           
+----------------------
+
+
+
+----------------------
+db.persons.find(
+                 {$and:[{"group":"FI-131"}]},
+                 {"lastname":1,_id:0,"firstname":1}
+)
+           
+        --select all students firstname and lastname where group = FI-131  
+----------------------
+
+
+----------------------
+db.persons.find(
+                 {"age":{$eq:22}},
+                 {"lastName":1,_id:0,"firstname":1}
+)
+ 
+        --select all students where age = 22
+----------------------
