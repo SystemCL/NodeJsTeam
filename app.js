@@ -6,8 +6,18 @@ var stylus = require('stylus');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
+// stop. tu nu ai inteles
+// proxy trebuie sa fie modul aparte
+// si 2 instante de daartwarehouse
+// proxy se conecteaza la una din ele , ea date si raspunde la client inapoi, tot asta prin http
+// acum treb de facut si de pornit fix asa o chesti ca asta doar ca returneaza o paniga la conectare
+
+
+
 var index = require('./routes/index');
 var users = require('./routes/users');
+//var proxy = require
 
 var app = express();
 

@@ -38,6 +38,10 @@ router.get('/persons', function(req, res) { /// persons/:group
     });
   });
   //res.send(req.params.group);
+  //res.send(//path la pagina);
+  //in caz ca avem in request /persons, atunci o sa-i trimita pagina
+  // ap da, da sa facem acum un fisier proxy si sal pornim sa ne conectam la el
+
 });
 
 

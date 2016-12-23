@@ -52,7 +52,8 @@ db.persons.remove({"lastname":"Petru"}) -- delete document from collection with 
 
 db.persons.remove()  -- delete all documents from collection
 
-
+//
+ db.persons.remove({}) - remove all objects
 
 ----------------------Asta o sa trebuiasca pentru request + de adaugat where and..
 
