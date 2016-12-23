@@ -1,25 +1,23 @@
 use mydb
 
-db.persons.insert({"firstname":"Balan","lastname":"Andrei","age":22,"group":"FI-121","sex":"M"})
-db.persons.insert({"firstname":"Ciorescu","lastname":"Mihai","age":23,"group":"FI-121","sex":"M"})
-db.persons.insert({"firstname":"Vlas","lastname":"Cristina","age":22,"group":"FI-131","sex":"F"})
-db.persons.insert({"firstname":"Ababii","lastname":"Valentina","age":23,"group":"FI-131","sex":"F"})
-db.persons.insert({"firstname":"Tuchila","lastname":"Ion","age":23,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Burlac","lastname":"Victor","age":22,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Dobos","lastname":"Dorin","age":22,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Fedco","lastname":"Boris","age":23,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Filipesco","lastname":"Radu","age":23,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Frunze","lastname":"Iacob","age":23,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Galescu","lastname":"Vladilen","age":22,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Ganta","lastname":"Veaceslav","age":23,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Gherman","lastname":"Olga","age":23,"group":"FI-131","sex":"F"})
-db.persons.insert({"firstname":"Macovei","lastname":"Ion","age":23,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Moisei","lastname":"Dumitru","age":22,"group":"FI-131","sex":"M"})
-db.persons.insert({"firstname":"Scarlat","lastname":"Cristina","age":22,"group":"FI-121","sex":"F"})
-db.persons.insert({"firstname":"Vornicescu","lastname":"Catalina","age":23,"group":"FI-131","sex":"F"})
-db.persons.insert({"firstname":"Petrache","lastname":"Ion","age":22,"group":"FI-121","sex":"M"})
-db.persons.insert({"firstname":"Andronic","lastname":"Ecaterina","age":22,"group":"FI-121","sex":"F"})
+db.persons.insert([{"firstname":"Balan","lastname":"Andrei","age":22,"group":"FI-121","sex":"M"},
+{"firstname":"Ciorescu","lastname":"Mihai","age":23,"group":"FI-121","sex":"M"},
+{"firstname":"Vlas","lastname":"Cristina","age":22,"group":"FI-131","sex":"F"},
+{"firstname":"Ababii","lastname":"Valentina","age":23,"group":"FI-131","sex":"F"},
+{"firstname":"Tuchila","lastname":"Ion","age":23,"group":"FI-131","sex":"M"},
+{"firstname":"Burlac","lastname":"Victor","age":22,"group":"FI-131","sex":"M"},
+{"firstname":"Dobos","lastname":"Dorin","age":22,"group":"FI-131","sex":"M"},
+{"firstname":"Fedco","lastname":"Boris","age":23,"group":"FI-131","sex":"M"},
+{"firstname":"Filipesco","lastname":"Radu","age":23,"group":"FI-131","sex":"M"},
+{"firstname":"Frunze","lastname":"Iacob","age":23,"group":"FI-131","sex":"M",
+{"firstname":"Galescu","lastname":"Vladilen","age":22,"group":"FI-131","sex":"M"},
+{"firstname":"Ganta","lastname":"Veaceslav","age":23,"group":"FI-131","sex":"M"},
+{"firstname":"Gherman","lastname":"Olga","age":23,"group":"FI-131","sex":"F"},
+{"firstname":"Macovei","lastname":"Ion","age":23,"group":"FI-131","sex":"M"},
+{"firstname":"Moisei","lastname":"Dumitru","age":22,"group":"FI-131","sex":"M"},
+{"firstname":"Scarlat","lastname":"Cristina","age":22,"group":"FI-121","sex":"F"},
+{"firstname":"Vornicescu","lastname":"Catalina","age":23,"group":"FI-131","sex":"F"},
+{"firstname":"Petrache","lastname":"Ion","age":22,"group":"FI-121","sex":"M"},
+{"firstname":"Andronic","lastname":"Ecaterina","age":22,"group":"FI-121","sex":"F"}
+])
 
-
-
-db.persons.find().pretty()
