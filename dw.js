@@ -3,6 +3,7 @@ var mongodb = require('mongodb');
 var express = require('express');
 var app = express();
 
+
 //We need to work with "MongoClient" interface in order to connect to a mongodb server.
 var mongoClient = mongodb.MongoClient;
 
@@ -22,7 +23,6 @@ app.route('/persons').get(function(req,res){
         res.send(str);
         //var cursor = collection.find({});
     });
-
 
 });
 
