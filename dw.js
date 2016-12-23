@@ -3,9 +3,14 @@
 var mongodb = require('mongodb');
 var express = require('express');
 var app = express();
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+var router = express.Router();
+
+
 var PORT = 8081;
 
-//We need to work with "MongoClient" interface in order to connect to a mongodb server.
 var mongoClient = mongodb.MongoClient;
 
 // Connection URL. This is where your mongodb server is running.
@@ -20,6 +25,7 @@ app.route('/').get(function(req,res){
 
 //http://localhost:8081/personslist
 app.route('/personslist').get(function(req,res){
+    console.log(req.method);// pune acolo, dai run
     mongoClient.connect(url, function(err, db){
         db.collection('persons').find().toArray(function(err, result){
            if(err){
@@ -31,6 +37,7 @@ app.route('/personslist').get(function(req,res){
 
 });
 
+
 //http://localhost:8081/persons?sex=F&group=FI-131
 app.route('/persons').get(function(req,res){
    mongoClient.connect(url,function(err,db){
@@ -39,40 +46,53 @@ app.route('/persons').get(function(req,res){
           if(err){
               throw err;
           }
-          res.send(result);
+          res.json(result);
       });
    });
+
 });
 
+
+app.route('/addperson').post(function (req, res) {
+    mongoClient.connect(url,function(err,db){
+        //Exemplu pentru a scoate date din body
+        // Get our form values. These rely on the "name" attributes
+        //var userName = req.body.username;
+        //var userEmail = req.body.useremail;
+        var firstname = "Ciocan"; //eu am pus direct string
+        var lastname = "Ion";
+        var age = 21;
+        var sex = "M";
+        var group = "FI-121";
+        // Submit to the DB
+        db.collection('persons').insert({
+            "firstname" : firstname,
+            "lastname" : lastname,
+            "age": age,
+            "sex": sex,
+            "group": group
+        }, function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+            }
+            else {
+                // And forward to success page
+                res.redirect("personslist");
+            }
+        });
+
+    });
+});
+
+/*
+app.post('/addUser', function(req, res){
+    console.dir(req.body);
+    res.send("test");
+});
+*/
 
 var server = app.listen(PORT,function(){
     console.log("DataWareHouse listening on: http://localhost:%s", PORT);
 });
 
-/*
-//Lets require/import the HTTP module
-var http = require('http');
-
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/mydb');
-
-
-const PORT=9000;
-
-
-//We need a function which handles requests and send response
-function handleRequest(request, response){
-        response.writeHeader(200, {"Content-Type": "text/html"});
-        response.write("raspunsul");
-        response.end();
-}
-
-//Create a server
-var server = http.createServer(handleRequest);
-
-//Lets start our server
-server.listen(PORT, function(){
-    //Callback triggered when server is successfully listening. Hurray!
-    console.log("DataWareHouse listening on: http://localhost:%s", PORT);
-}); */
