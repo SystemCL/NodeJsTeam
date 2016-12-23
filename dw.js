@@ -15,19 +15,12 @@ var str = "";
 
 app.route('/persons').get(function(req,res){
     mongoClient.connect(url, function(err, db){
-        var cursor = db.collection('persons').find({});
-        cursor.each(function(err,item){
-            if(item != null){
-                str = str + "{" +
-                    item.firstname + ","
-                    + item.lastname + ","
-                    + item.age + ","
-                    + item.group + ","
-                    + item.sex + "}";
-            }
+        db.collection('persons').find().toArray(function(err, result){
+           if(err){
+               throw err;
+           }
+           res.send(result);
         });
-        res.send(str);
-        //var cursor = collection.find({});
     });
 
 });
