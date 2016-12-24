@@ -3,8 +3,7 @@
 var http = require('http');
 var redis = require('redis');
 var express = require('express');
-var mongodb = require('mongodb');
-var app = express();
+
 client = redis.createClient();
 fs = require('fs');
 
@@ -14,6 +13,24 @@ const PORT=8080;
 
 //We need a function which handles requests and send response
 function handleRequest(request, response){
+
+    var myReq = {
+
+        host: 'http://localhost',
+        path: '/',
+        //since we are listening on a custom port, we need to specify it by hand
+        port: '8081',
+        //This is what changes the request to a POST request
+        method: 'POST'
+    };
+    console.log(request.url);
+    http.request(request, function (err, res) {
+        if (err) {
+            throw err;
+        }
+        res.write(myReq);
+        res.end();
+    });
 
     // put in cache
     client.set('string key', 'Hello World', redis.print);
@@ -36,7 +53,7 @@ function handleRequest(request, response){
     });
 }
 
-module.exports.findPersonByFirstName = function(db, redis, firstname, callback) {
+/*module.exports.findPersonByFirstName = function(db, redis, firstname, callback) {
     redis.get(firstname, function (err, reply) {
         if (err) callback(null);
         else if (reply)
@@ -67,7 +84,7 @@ app.get('/persons/:firstname', function(req,res) {
             else res.status(200).send(person)
             });
     }
-});
+});*/
 
 
 //Create a server
