@@ -24,11 +24,6 @@ db.persons.insert( [
 
 ])
 
-// test
-db.persons.insert(
-{"firstname":"ABalan","lastname":"Andrei","age":22,"group":"FI-121","sex":"M"},
-{"firstname":"BBalan","lastname":"Andrei","age":22,"group":"FI-121","sex":"M"}
-)
-
 
 db.persons.find().pretty()
+

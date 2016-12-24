@@ -1,0 +1,79 @@
+<html>
+<head>
+
+</head>
+<body>
+<div id="main" style="width: 100%; height: 800px">
+    <div id="left" style="width: 50%; background: coral; height: 100%; float: left">
+        <center>
+            <br>
+            <br>
+            <br>
+            <form>
+                <label for="insert_name">Nume</label>
+                <input id="insert_name" type="text" placeholder="name...">
+                <br>
+                <label for="insert_surname">Prenume</label>
+                <input id="insert_surname" type="text" placeholder="prenume...">
+                <br>
+                <label for="insert_age">Virsta</label>
+                <input id="insert_age" type="text" placeholder="ani...">
+                <br>
+                <label for="insert_group">Grupa</label>
+                <input id="insert_group" type="text" placeholder="grupa...">
+                <br>
+                <label>Sex</label><br>
+                <label for="insert_male">Male</label>
+                <input id="insert_male" type="radio" name="sex" value="male">
+                <label for="insert_female">Female</label>
+                <input id="insert_female" type="radio" name="sex" value="female">
+                <br>
+                <br>
+                <input type="submit" value="Insert">
+        </form>
+            </center>
+    </div>
+    <div id="right" style="width: 50%; background: greenyellow; height: 100%; float: right">
+            <center>
+
+                <form>
+                    <br>
+                    <br>
+                    <br>
+                    <label for="resp_name">Nume</label>
+                    <input id="resp_name" type="text" placeholder="name...">
+                    <br>
+                    <label for="resp_surname">Prenume</label>
+                    <input id="resp_surname" type="text" placeholder="prenume...">
+                    <br>
+                    <label for="resp_age">Virsta</label>
+                    <input id="resp_age" type="text" placeholder="ani...">
+                    <br>
+                    <label for="resp_group">Grupa</label>
+                    <select>
+                        <option value="FI-131">FI-131</option>
+                        <option value="FI-121">FI-121</option>
+                    </select>
+                    <br>
+                    <br>
+                    <label>Response</label><br>
+                    <br>
+                    <label for="resp_male">JSON</label>
+                    <input id="resp_male" type="radio" name="sex" value="json">
+                    <label for="resp_female">XML</label>
+                    <input id="resp_female" type="radio" name="sex" value="xml">
+                    <br>
+                    <br>
+                    <input type="submit" value="Ask for data">
+                </form>
+
+                <textarea for="response" rows="15" cols="80">Response here</textarea>
+
+                <!--VLAD - tabelul aici trebuie sa fie-->
+
+
+            </center>
+    </div>
+</div>
+</body>
+</html>
