@@ -16,7 +16,7 @@ var index = require('./routes/index');
 function handleRequest(request, response){
 
 
-    fs.readFile('./clientMainPage.html', function (err, html) {
+    fs.readFile('./clientPage.html', function (err, html) {
         if (err) {
             throw err;
         }
