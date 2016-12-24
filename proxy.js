@@ -1,20 +1,27 @@
 
 //Lets require/import the HTTP module
 var http = require('http');
+var redis = require('redis');
+client = redis.createClient();
 fs = require('fs');
 
 //Lets define a port we want to listen to
 const PORT=8080;
-var index = require('./routes/index');
-
-
-
-
 
 
 //We need a function which handles requests and send response
 function handleRequest(request, response){
 
+    // put in cache
+    client.set('string key', 'Hello World', redis.print);
+    // Expire in 3 seconds
+    client.expire('string key', 3);
+    // get from
+    client.get('string key');
+
+    // vlad
+    // faci cache numai la requesturile care cer date
+    //
 
     fs.readFile('./clientPage.html', function (err, html) {
         if (err) {
