@@ -1,10 +1,10 @@
 # NodeJsTeam
 
 Team:
-Ploaia Vladislav
-Tabirta Adrian
-Frunze Iacob
-Ganta Veceslav
+*	Ploaia Vladislav
+* 	Tabirta Adrian
+*	Frunze Iacob
+*	Ganta Veceslav
 
 ======================================================
 
