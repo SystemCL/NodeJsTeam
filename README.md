@@ -6,6 +6,7 @@ Team:
 * 	Tabirta Adrian
 *	Frunze Iacob
 *	Ganta Veceslav
+
 ======================================================
 
 ###Running project###
