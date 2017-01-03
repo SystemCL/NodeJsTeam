@@ -1,14 +1,12 @@
 # NodeJsTeam
-
+###Proxy server with load balancing + datawarehouse###
+======================================================
 Team:
 *	Ploaia Vladislav
 * 	Tabirta Adrian
 *	Frunze Iacob
 *	Ganta Veceslav
-
 ======================================================
-
-Proxy server with load balancing + datawarehouse
 
 ###Running project###
 
