@@ -37,9 +37,9 @@ Team:
 *	1) (For Windows) Run redis-cli.exe
 *	2) (For Windows) In cmd: "path_where_installed_MongoDB/mongod.exe" --dbpath "path_to_project/data"
 *	3) (For Windows) In another cmd: path_where_installed_MongoDB/mongo.exe
-        - Here, in terminal, you must create database: use mydb
-        - Next, you will need to fill MongoDB database, so, you can go to supportFiles and copy all content of database.txt into terminal mongo.exe
 
+    - Here, in terminal, you must create database: use mydb
+    - Next, you will need to fill MongoDB database, so, you can go to supportFiles and copy all content of database.txt into terminal mongo.exe
 *   4) Run Datawarehouse using terminal: node dw.js
 *   5) Run Proxy: node proxy.js
 *   6) Open your browser, and type http://localhost/persons/   
