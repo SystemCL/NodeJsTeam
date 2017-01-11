@@ -3,10 +3,6 @@
 var mongodb = require('mongodb');
 var express = require('express');
 var app = express();
-var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-var router = express.Router();
 
 
 var PORT = 8081;
@@ -24,35 +20,32 @@ app.route('/').get(function(req,res){
 });
 
 //http://localhost:8081/personslist
-app.route('/personslist').get(function(req,res){
+app.route('/persons').get(function(req,res){
     console.log(req.method);// pune acolo, dai run
     mongoClient.connect(url, function(err, db){
-        db.collection('persons').find().toArray(function(err, result){
-           if(err){
-               throw err;
-           }
-           res.json(result);
-        });
+        var query = require('url').parse(req.url,true).query;
+        if(query.group != null && query.sex !=null ){
+            var query = require('url').parse(req.url,true).query;
+            db.collection('persons').find({sex:query.sex, group:query.group}, {}).toArray(function(err,result){
+                if(err){
+                    throw err;
+                }
+                res.json(result);
+            });
+        } else {
+            db.collection('persons').find().toArray(function(err, result){
+                if(err){
+                    throw err;
+                }
+                res.json(result);
+            });
+        }
     });
 
 });
 
 
 //http://localhost:8081/persons?sex=F&group=FI-131
-app.route('/persons').get(function(req,res){
-   mongoClient.connect(url,function(err,db){
-       var query = require('url').parse(req.url,true).query;
-      db.collection('persons').find({sex:query.sex, group:query.group}, {}).toArray(function(err,result){
-          if(err){
-              throw err;
-          }
-          res.json(result);
-      });
-   });
-
-});
-
-
 app.route('/addperson').post(function (req, res) {
     mongoClient.connect(url,function(err,db){
         //Exemplu pentru a scoate date din body
