@@ -3,15 +3,17 @@
 
 </head>
 <body>
+
+
 <div id="main" style="width: 100%; height: 800px">
     <div id="left" style="width: 50%; background: coral; height: 100%; float: left">
         <center>
             <br>
             <br>
             <br>
-            <form>
-                <label for="insert_name">Nume</label>
-                <input id="insert_name" type="text" placeholder="name...">
+            <form method="get" action="/insert">
+                <label for="insert_name" >Nume</label>
+                <input id="insert_name" name="firstname" type="text" placeholder="name...">
                 <br>
                 <label for="insert_surname">Prenume</label>
                 <input id="insert_surname" type="text" placeholder="prenume...">
@@ -67,7 +69,7 @@
                     <input type="submit" value="Ask for data">
                 </form>
 
-                <textarea for="response" rows="15" cols="80">Response here</textarea>
+                <textarea for="responseTextarea" rows="15" cols="80">Response here</textarea>
 
                 <!--VLAD - tabelul aici trebuie sa fie-->
 
