@@ -1,4 +1,5 @@
-var parser = require("xml2json");
+//var parser = require("xml2json");
+var jsonxml = require("jsontoxml");
 var request = require('request');
 var express = require('express');
 
@@ -6,6 +7,7 @@ var redis = require('redis');
 var redisClient = redis.createClient();
 var app = express();
 var fs = require('fs');
+
 
 app.listen(9000, function () {
    console.log("proxy started on 9000!!!");
@@ -25,7 +27,17 @@ app.get('/', function (req, res) {
 
 app.get("/insert", function (req, res) {
 
-    request.post("http://localhost:8081/personslist", function (error, response, body) {
+    person = {
+        firstname:req.query.firstname,
+        lastname:req.query.lastname,
+        age:req.query.age,
+        group:req.query.group,
+        sex:req.query.sex
+    };
+    console.log(person);
+    res.send(person);
+
+    request.post("http://localhost:8081/persons", function (error, response, body) {
         if (!error && response.statusCode == 200) {
            // send back to client
             res.write();
@@ -45,7 +57,7 @@ app.get("/insert", function (req, res) {
     //req.send(res);
 });
 
-app.get("/personslist", function (req, res) {
+app.get("/persons", function (req, res) {
 
     // client.set('string key', 'Hello World', redis.print);
 // // Expire in 3 seconds
@@ -54,39 +66,35 @@ app.get("/personslist", function (req, res) {
 // client.get('string key');
 
    // var query = require('url').parse(req.url,true);
-    console.log(req.url);
+    console.log(req.url.toString());
 
-    if (redisClient.get(req.url) != null ) {
+    if (redisClient.get(req.url) == null ) {
         // se afla in cache
 
-        res.write(redisClient.get(req.url));
+        res.write(" " + redisClient.get(req.url)); //aici da true
         res.end();
 
     } else {
         // nu se gaseste in cache
-        request("http://localhost:8081/personslist", function (error, response, body) {
+        request("http://localhost:8081/persons", function (error, response, body) {
             if (!error && response.statusCode == 200) {
 
                 // put in cache
-                redisClient.set(req.url, body, redis.print)
-
-
-                var options = {
-                    object: true,
-                    reversible: true,
-                    coerce: false,
-                    sanitize: true,
-                    trim: true,
-                    arrayNotation: true
-                };
-
+                redisClient.set(req.url, body, redis.print);
+                var abc = jsonxml(body);
                 res.write('<html><head></head><body>');
                 res.write('<p>Respose here: </p>');
-                res.write('<p><textarea for="responseTextarea" rows="15" cols="80">'+ parser.toXml(body, options) +'</textarea></p>');
+                //res.write('<p><textarea for="responseTextarea" rows="15" cols="80">'+ parser.toXml(body, options) +'</textarea></p>');
+               // res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ jsonxml(body) +'</textarea></p>');
+               res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ jsonxml(body) +'</textarea></p>');
                 res.end('</body></html>');
-                res.end();
+
+                
+
+
+
             }
-        })
+        });
     }
 
 
