@@ -12,35 +12,34 @@ var mongoClient = mongodb.MongoClient;
 var url = 'mongodb://localhost:27017/mydb';
 
 //http://localhost:8081/
-app.use(function(req, res, next) {
+app.use(function(request, response, next) {
 
     console.time('handler name');
     // log each request to the console
-    console.log(req.method, req.url);
-
+    console.log(request.method, request.url);
     // continue doing what we were doing and go to the route
     next();
     console.timeEnd('handler name');
     console.log("--------------------------------")
 });
 
-app.route('/').get(function(req,res){
-   res.send("Datawarehouse");
+app.route('/').get(function(request,response){
+   response.send("Datawarehouse");
 });
 
 // http://localhost:8081/persons
 // http://localhost:8081/persons?sex=F&group=FI-131
-app.route('/persons').get(function(req,res){
-    console.log(req.method);// pune acolo, dai run
+app.route('/persons').get(function(request,response){
+    console.log(request.method);// pune acolo, dai run
     mongoClient.connect(url, function(err, db){
-        var query = require('url').parse(req.url,true).query;
+        var query = require('url').parse(request.url,true).query;
         if(query.group != null && query.sex !=null ){
-            var query = require('url').parse(req.url,true).query;
+            var query = require('url').parse(request.url,true).query;
             db.collection('persons').find({sex:query.sex, group:query.group}, {}).toArray(function(err,result){
                 if(err){
                     throw err;
                 } else{
-                    res.json(result);
+                    response.json(result);
                 }
             });
         } else {
@@ -48,7 +47,7 @@ app.route('/persons').get(function(req,res){
                 if(err){
                     throw err;
                 }
-                res.json(result);
+                response.json(result);
             });
         }
     });
@@ -56,34 +55,34 @@ app.route('/persons').get(function(req,res){
 });
 
 // http://localhost:8081/persons/Balan  -search by firstname
-app.route("/persons/:firstname").get(function(req, res) {
+app.route("/persons/:firstname").get(function(request, response) {
     mongoClient.connect(url, function (err, db) {
-        db.collection('persons').find({'firstname':req.params.firstname}, {}).toArray(function (err, result) {
+        db.collection('persons').find({'firstname':request.params.firstname}, {}).toArray(function (err, result) {
             if (err) {
                 throw err;
             }
-            res.json(result);
+            response.json(result);
         });
     });
 });
 
 //not work yet
-app.route('/deleteperson/:id').delete(function(req,res){
+app.route('/deleteperson/:id').delete(function(request,response){
     mongoClient.connect(url, function(err,db){
-        var personToDelete = req.params.id;
+        var personToDelete = request.params.id;
         db.collection('persons').remove({ '_id':personToDelete}, function(err){
-            res.send((err === null) ? {msg: ''} : {msg:'error: '+err});
+            response.send((err === null) ? {msg: ''} : {msg:'error: '+err});
         });
     });
 });
 
 //it works with post method
-app.route('/addperson').post(function (req, res) {
+app.route('/addperson').post(function (request, response) {
     mongoClient.connect(url,function(err,db){
         //Exemplu pentru a scoate date din body
         // Get our form values. These rely on the "name" attributes
-        //var userName = req.body.username;
-        //var userEmail = req.body.useremail;
+        //var userName = request.body.username;
+        //var userEmail = request.body.useremail;
         var firstname = "Ciocan"; //eu am pus direct string //proxy o sa trimita date
         var lastname = "Ion";
         var age = 21;
@@ -99,11 +98,11 @@ app.route('/addperson').post(function (req, res) {
         }, function (err, doc) {
             if (err) {
                 // If it failed, return error
-                res.send("There was a problem adding the information to the database.");
+                response.send("There was a problem adding the information to the database.");
             }
             else {
-                // And forward to success page
-                res.redirect("persons");
+                // And forward to persons page
+                response.redirect("persons");
             }
         });
 
