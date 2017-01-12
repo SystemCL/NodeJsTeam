@@ -2,6 +2,8 @@
 //Lets require/import the HTTP module
 var http = require('http');
 var redis = require('redis');
+var express = require('express');
+
 client = redis.createClient();
 fs = require('fs');
 
@@ -12,17 +14,41 @@ const PORT=8080;
 //We need a function which handles requests and send response
 function handleRequest(request, response){
 
+}
 
-
-    fs.readFile('./html/clientPage.html', function (err, html) {
-        if (err) {
-            throw err;
+/*module.exports.findPersonByFirstName = function(db, redis, firstname, callback) {
+    redis.get(firstname, function (err, reply) {
+        if (err) callback(null);
+        else if (reply)
+            callback(JSON.parse(reply));
+        else {
+            //Firstname doesn't exist in cache - we need to query the main database
+            db.collection('persons').findOne({
+                firstname: firstname
+            }, function (err, doc) {
+                if (err || !doc) callback(null);
+                else {//Person found in database, save to cache and
+                    //return to client
+                    redis.set(firstname, JSON.stringify(doc), function () {
+                            callback(doc);
+                        }
+                    );
+                }
+            });
         }
-        response.writeHeader(200, {"Content-Type": "text/html"});
-        response.write(html);
-        response.end();
     });
 }
+
+app.get('/persons/:firstname', function(req,res) {
+    if(!req.param('firstname')) res.status(400).send("Please send a proper firstname");
+    else {
+        access.findPersonByFirstName(db,redis,req.param('firstname'), function(person){
+            if(!person) res.status(500).send("Server error");
+            else res.status(200).send(person)
+            });
+    }
+});*/
+
 
 //Create a server
 var server = http.createServer(handleRequest);
