@@ -77,18 +77,18 @@ app.route('/deleteperson/:id').delete(function(request,response){
 });
 
 //it works with post method
-app.route('/addperson').post(function (request, response) {
+app.route('/insert').post(function (request, response) {
     mongoClient.connect(url,function(err,db){
         //Exemplu pentru a scoate date din body
         // Get our form values. These rely on the "name" attributes
         //var userName = request.body.username;
         //var userEmail = request.body.useremail;
-        var firstname = "Ciocan"; //eu am pus direct string //proxy o sa trimita date
+        /*var firstname = "Ciocan"; //eu am pus direct string //proxy o sa trimita date
         var lastname = "Ion";
         var age = 21;
         var sex = "M";
         var group = "FI-121";
-        // Submit to the DB
+        // Submit to the DB*/
         db.collection('persons').insert({
             "firstname" : firstname,
             "lastname" : lastname,
