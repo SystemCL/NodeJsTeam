@@ -12,6 +12,18 @@ var mongoClient = mongodb.MongoClient;
 var url = 'mongodb://localhost:27017/mydb';
 
 //http://localhost:8081/
+app.use(function(req, res, next) {
+
+    console.time('handler name');
+    // log each request to the console
+    console.log(req.method, req.url);
+
+    // continue doing what we were doing and go to the route
+    next();
+    console.timeEnd('handler name');
+    console.log("--------------------------------")
+});
+
 app.route('/').get(function(req,res){
    res.send("Datawarehouse");
 });
@@ -28,7 +40,6 @@ app.route('/persons').get(function(req,res){
                 if(err){
                     throw err;
                 } else{
-                    console.log("Time: ", Date.now().toString());
                     res.json(result);
                 }
             });
