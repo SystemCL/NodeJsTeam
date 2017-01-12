@@ -5,7 +5,7 @@
 <body>
 
 
-<div id="main" style="width: 100%; height: 800px">
+<div id="main" style="width: auto; height: auto">
     <div id="left" style="width: 50%; background: coral; height: 100%; float: left">
         <center>
             <br>
@@ -13,22 +13,22 @@
             <br>
             <form method="get" action="/insert">
                 <label for="insert_name" >Nume</label>
-                <input id="insert_name" name="firstname" type="text" placeholder="name...">
+                <input id="insert_name" name="firstname" type="text" placeholder="nume...">
                 <br>
                 <label for="insert_surname">Prenume</label>
-                <input id="insert_surname" type="text" placeholder="prenume...">
+                <input id="insert_surname" name="lastname" type="text" placeholder="prenume...">
                 <br>
                 <label for="insert_age">Virsta</label>
-                <input id="insert_age" type="text" placeholder="ani...">
+                <input id="insert_age" name="age" type="text" placeholder="ani...">
                 <br>
                 <label for="insert_group">Grupa</label>
-                <input id="insert_group" type="text" placeholder="grupa...">
+                <input id="insert_group" name="group" type="text" placeholder="grupa...">
                 <br>
                 <label>Sex</label><br>
                 <label for="insert_male">Male</label>
-                <input id="insert_male" type="radio" name="sex" value="male">
+                <input id="insert_male" type="radio" name="sex" value="M">
                 <label for="insert_female">Female</label>
-                <input id="insert_female" type="radio" name="sex" value="female">
+                <input id="insert_female" type="radio" name="sex" value="F">
                 <br>
                 <br>
                 <input type="submit" value="Insert">
@@ -78,4 +78,3 @@
     </div>
 </div>
 </body>
-</html>
