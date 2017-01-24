@@ -1,80 +1,111 @@
+<!DOCTYPE html>
 <html>
-<head>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<title>Client Zone</title>
+	</head>
+	<body>
+	<style type="text/css">
+		.row.parrent {
+			margin-top: 5%;
+		}
+		body{
+			background-color: #d9edf7;
+		}
+		.col-md-6.insert_area button {
+			margin-top: 13px;
+		}
+		.col-md-6.request_area button {
+			margin-top: 13px;
+		}
+		.col-md-12.rep_area{
+			margin-top: 70px;
+		}
+		.col-md-6.insert_area {
+			padding: 30px 50px 30px;
+			background: #9dffc4;
+		}
+		.col-md-6.request_area {
+			padding: 30px 50px 30px;
+			background: #e6c6ff;
+		}
+	</style>
+		<div class="container">
+			<div class="row parrent">
+				<div  class="col-md-6 insert_area">
+				<h3>Insert form</h3>
+					<form method="get" action="/insert">
+						  <div class="form-group">
+							<label for="insert_name">Nume</label>
+							<input type="text" name="firstname" class="form-control" id="insert_name">
+						  </div>
+						  <div class="form-group">
+							<label for="insert_lastname">Prenume</label>
+							<input type="text" name="lastname" class="form-control" id="insert_lastname">
+						  </div>
+							<div class="form-group">
+							<label for="insert_varsta">Virsta</label>
+							<input type="text" name="age" class="form-control" id="insert_varsta">
+						  </div>
+						 <div class="form-group">
+							<label for="insert_group">Grupa</label>
+							<select id="insert_group" name="group" class="form-control">
+								<option>FI-131</option>
+								<option>FI-121</option>
+							</select>
+						</div>
+						 <label class="radio-inline">
+							<input type="radio" name="sex" id="inlineRadio1" value="M"> M
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="sex" id="inlineRadio2" value="F"> F
+						</label>
+						 <div class="form-group">
+							<button type="submit" class="btn btn-info">Insert</button>
+						</div>
+					</form>
+				</div>
+				<div  class="col-md-6 request_area">
+					<h3>Request form</h3>			
+					<form method="get" action="/persons">
+						  <div class="form-group">
+							<label for="nume">Nume</label>
+							<input type="text" name="resp_firstname" class="form-control" id="nume">
+						  </div>
+						  <div class="form-group">
+							<label for="prenume">Prenume</label>
+							<input type="text" name="resp_lastname" class="form-control" id="prenume">
+						  </div>
+							<div class="form-group">
+							<label for="varsta">Virsta</label>
+							<input type="text" name="resp_age" class="form-control" id="varsta">
+						  </div>
+						 <div class="form-group">
+							<label for="group">Grupa</label>
+							<select id="group" name="resp_group" class="form-control">
+								<option>FI-131</option>
+								<option>FI-121</option>
+							</select>
+						</div>
+						 <label class="radio-inline">
+							<input type="radio" name="resp_type" id="inlineRadio1" value="json"> JSON
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="resp_type" id="inlineRadio2" value="xml"> XML
+						</label>
+						 
+						<div class="form-group">
+							<button type="submit" class="btn btn-info">Request</button>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-12 rep_area">
+					<div class="form-group">
+						<textarea class="form-control" name="response_area" rows="5" id="comment"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
 
-</head>
-<body>
-
-
-<div id="main" style="width: auto; height: auto">
-    <div id="left" style="width: 50%; background: coral; height: 100%; float: left">
-        <center>
-            <br>
-            <br>
-            <br>
-            <form method="get" action="/insert">
-                <label for="insert_name" >Nume</label>
-                <input id="insert_name" name="firstname" type="text" placeholder="nume...">
-                <br>
-                <label for="insert_surname">Prenume</label>
-                <input id="insert_surname" name="lastname" type="text" placeholder="prenume...">
-                <br>
-                <label for="insert_age">Virsta</label>
-                <input id="insert_age" name="age" type="text" placeholder="ani...">
-                <br>
-                <label for="insert_group">Grupa</label>
-                <input id="insert_group" name="group" type="text" placeholder="grupa...">
-                <br>
-                <label>Sex</label><br>
-                <label for="insert_male">Male</label>
-                <input id="insert_male" type="radio" name="sex" value="M">
-                <label for="insert_female">Female</label>
-                <input id="insert_female" type="radio" name="sex" value="F">
-                <br>
-                <br>
-                <input type="submit" value="Insert">
-        </form>
-            </center>
-    </div>
-    <div id="right" style="width: 50%; background: greenyellow; height: 100%; float: right">
-            <center>
-
-                <form>
-                    <br>
-                    <br>
-                    <br>
-                    <label for="resp_name">Nume</label>
-                    <input id="resp_name" type="text" placeholder="name...">
-                    <br>
-                    <label for="resp_surname">Prenume</label>
-                    <input id="resp_surname" type="text" placeholder="prenume...">
-                    <br>
-                    <label for="resp_age">Virsta</label>
-                    <input id="resp_age" type="text" placeholder="ani...">
-                    <br>
-                    <label for="resp_group">Grupa</label>
-                    <select>
-                        <option value="FI-131">FI-131</option>
-                        <option value="FI-121">FI-121</option>
-                    </select>
-                    <br>
-                    <br>
-                    <label>Response</label><br>
-                    <br>
-                    <label for="resp_male">JSON</label>
-                    <input id="resp_male" type="radio" name="sex" value="json">
-                    <label for="resp_female">XML</label>
-                    <input id="resp_female" type="radio" name="sex" value="xml">
-                    <br>
-                    <br>
-                    <input type="submit" value="Ask for data">
-                </form>
-
-                <textarea for="responseTextarea" rows="15" cols="80">Response here</textarea>
-
-                <!--VLAD - tabelul aici trebuie sa fie-->
-
-
-            </center>
-    </div>
-</div>
-</body>
