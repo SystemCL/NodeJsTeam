@@ -1,6 +1,7 @@
 var jsonxml = require("jsontoxml");
 var request = require('request');
 var express = require('express');
+//var flash = require('connect-flash');
 
 var redis = require('redis');
 var redisClient = redis.createClient();
@@ -34,12 +35,14 @@ app.get("/insert", function (req, res) {
 	}, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			 // send back to client
-				
+
 		}
+		//req.flash('success', 'Your person was inserted');
 	});
 
-	setTimeout(function(){ 
-		alert("Inserted !"); }, 1000);
+	/*setTimeout(function(){
+		alert("Inserted !"); }, 1000);*/
+	//res.send(500,'showAlert');
 
 });
 
