@@ -32,9 +32,12 @@ app.route('/persons').get(function(request,response){
 	console.log(request.method);// pune acolo, dai run
 	mongoClient.connect(url, function(err, db){
 		var query = require('url').parse(request.url,true).query;
-		if(query.group != null && query.sex !=null ){
+		if(query.firstname != null || query.lastname !=null || query.group != null || query.sex !=null ){
+		//if(query.group != null || parseInt(query.age, 10) != 0 || query.firstname !=null || query.lastname !=null ){
 			var query = require('url').parse(request.url,true).query;
-			db.collection('persons').find({sex:query.sex, group:query.group}, {}).toArray(function(err,result){
+			//parseInt(request.query.age, 10);
+			db.collection('persons').find({firstname:query.firstname,lastname:query.lastname,group:query.group,sex:query.sex}, {}).toArray(function(err,result){
+			//db.collection('persons').find({group:query.group, age:parseInt(query.age, 10), firstname:query.firstname, lastname:query.lastname}, {}).toArray(function(err,result){
 				if(err){
 					throw err;
 				} else{
