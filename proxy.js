@@ -45,8 +45,7 @@ app.get('/', function (req, res) {
 
 app.get("/insert", function (req, res) {
 
-	// res.writeHead(301,  {Location: '/'} );
-	// res.end();
+
 
 	console.log(req.query);
 
@@ -64,10 +63,13 @@ app.get("/insert", function (req, res) {
 	}, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			// send back to client
-			response.writeHead(301,  {Location: '/'});
-			response.end();
+			/*response.writeHead(301,  {Location: '/'});
+			response.end();*/
 		}
 	});
+
+	res.writeHead(301,  {Location: '/'} );
+	res.end();
 });
 
 app.get("/persons", function (req, res) {
@@ -78,7 +80,8 @@ app.get("/persons", function (req, res) {
 		var lname =	'&lastname=' + req.query.resp_lastname ;
 		var age = '&age=' + req.query.resp_age ;
 		var group = '&group=' + req.query.resp_group ;
-		var sex = '&sex=' +  ""; //req.query.resp_sex;
+		var sex = '&sex=' + req.query.resp_sex;
+	//	var sex = '&sex=' +  ""; //req.query.resp_sex;
 
 		//console.log("######", req.query.resp_type);
 
