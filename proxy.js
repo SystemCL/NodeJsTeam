@@ -45,20 +45,19 @@ app.get('/', function (req, res) {
 
 app.get("/insert", function (req, res) {
 
-	//res.writeHead(301,  {Location: '/'} );
-	//res.end();
+	// res.writeHead(301,  {Location: '/'} );
+	// res.end();
 
 	console.log(req.query);
 
-	var fname = 'firstname='+ req.query.resp_firstname;
-	var lname = '&lastname=' + req.query.resp_lastname;
-	var age = '&age=' + req.query.resp_age;
-	var group = '&group=' + req.query.resp_group;
-	var sex = '&sex=' + req.query.resp_sex;
+	var fname = 'firstname='+ req.query.firstname;
+	var lname = '&lastname=' + req.query.lastname;
+	var age = '&age=' + req.query.age;
+	var group = '&group=' + req.query.group;
+	var sex = '&sex=' + req.query.sex;
 
+	var finalUrl = dwAdress + randomNumber(9500,9501) + "/insert?" + fname +lname + age + group + sex;
 
-
-	 var finalUrl = dwAdress + randomNumber(9500,9501) + "insert?" + fname +lname + age + group + sex;
 	request.post({
 		headers: {'content-type' : 'application/json'},
 		url:    finalUrl
