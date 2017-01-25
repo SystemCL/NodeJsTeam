@@ -7,7 +7,9 @@ var redis = require('redis');
 var redisClient = redis.createClient();
 var app = express();
 var fs = require('fs');
+
 var dwAdress = "http://localhost:";
+var cacheTimeOut = 10;
 
 app.listen(9000, function () {
 	console.log("proxy started on 9000!!!");
@@ -61,15 +63,34 @@ app.get("/persons", function (req, res) {
 
 	redisClient.get(req.url, function (error, reply) {
 
+		var fname = '?firstname='+ req.query.resp_firstname ;
+		var lname =	'&lastname=' + req.query.resp_lastname ;
+		var age = '&age=' + req.query.resp_age ;
+		var group = '&group=' + req.query.resp_group ;
+		var sex = '&sex=' +  ""; //req.query.resp_sex;
+
+		//console.log("######", req.query.resp_type);
+
 		// loadbalancing in one line :D
-		var finalUrl = dwAdress + randomNumber(9500,9501) + "/persons";
+		var finalUrl = dwAdress + randomNumber(9500,9501) + "/persons" + fname + lname + age + group + sex;
 		console.log("LOADBALANCING URL >>>>", finalUrl);
 
 		if (reply) {
 
 			console.log("data din cache: " + reply);
-			res.write(" " + redisClient.get(req.url)); //aici da true
-			res.end();
+
+			if (req.query.resp_type == "xml") {
+				// SEND DATA XML
+				res.write('<html><head></head><body>');
+				res.write('<p>Respose here: </p>');
+				res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ jsonxml(reply) +'</textarea></p>');
+
+			} else {
+				res.write('<html><head></head><body>');
+				res.write('<p>Respose here: </p>');
+				res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ reply +'</textarea></p>');
+			}
+			res.end('</body></html>');
 
 		} else {
 
@@ -78,14 +99,20 @@ app.get("/persons", function (req, res) {
 				if (!error && response.statusCode == 200) {
 
 					redisClient.set(req.url, body, redis.print);
-					redisClient.expire(req.url, 5); // is in cache fot 5 sec
+					redisClient.expire(req.url, cacheTimeOut);
 
-					var abc = jsonxml(body);
-					res.write('<html><head></head><body>');
-					res.write('<p>Respose here: </p>');
-					//res.write('<p><textarea for="responseTextarea" rows="15" cols="80">'+ parser.toXml(body, options) +'</textarea></p>');
-					// res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ jsonxml(body) +'</textarea></p>');
-					res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ jsonxml(body) +'</textarea></p>');
+					if (req.query.resp_type == "xml") {
+						// SEND DATA XML
+						res.write('<html><head></head><body>');
+						res.write('<p>Respose here: </p>');
+						res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ jsonxml(body) +'</textarea></p>');
+
+					} else {
+						res.write('<html><head></head><body>');
+						res.write('<p>Respose here: </p>');
+						res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ body +'</textarea></p>');
+
+					}
 					res.end('</body></html>');
 				}
 			});

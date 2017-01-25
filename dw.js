@@ -32,33 +32,57 @@ app.route('/persons').get(function(request,response){
 
 	mongoClient.connect(url, function(err, db){
 		var query = require('url').parse(request.url,true).query;
+
+		var searchPath = {};
+
+		if (query.firstname != null) {
+			searchPath.firstname = query.firstname ;
+			console.log(searchPath);
+		}
+
+		if (query.lastname != null) {
+			searchPath.lastname = query.lastname;
+		}
+
+
+		db.collection('persons').find( {"firstname": {$regex: ".*"+ query.firstname +".*", $options:"i"},
+			"lastname":{$regex: ".*"+ query.lastname +".*", $options:"i"}}
+		).toArray(function(err, result){
+			if(err){ throw err;}
+			response.json(result);
+		});
+
+
+
+	});
+
+	/*
+	mongoClient.connect(url, function(err, db){
+		var query = require('url').parse(request.url,true).query;
 		if(query.firstname != null ||
 			query.lastname !=null ||
+			query.age != null ||
 			query.group != null ||
-			query.sex !=null ||
-			query.keyUrl != null) {
+			query.sex !=null ) {
 
-		//if(query.group != null || parseInt(query.age, 10) != 0 || query.firstname !=null || query.lastname !=null ){
 			var query = require('url').parse(request.url,true).query;
 			//parseInt(request.query.age, 10);
-			db.collection('persons').find({firstname:query.firstname,lastname:query.lastname,group:query.group,sex:query.sex}, {}).toArray(function(err,result){
-			//db.collection('persons').find({group:query.group, age:parseInt(query.age, 10), firstname:query.firstname, lastname:query.lastname}, {}).toArray(function(err,result){
-				if(err){
-					throw err;
-				} else{
-					response.json(result);
-				}
+			db.collection('persons').find({firstname:query.firstname,
+					   					   lastname:query.lastname,
+											age:query.age,
+				               	  			group:query.group,
+											sex:query.sex},
+				{}).toArray(function(err,result){
+				if(err){ throw err; } else{ response.json(result); }
 			});
 		} else {
 			db.collection('persons').find().toArray(function(err, result){
-				if(err){
-					throw err;
-				}
+				if(err){ throw err;}
 				response.json(result);
 			});
 		}
 	});
-
+	*/
 });
 
 // http://localhost:8081/persons/Balan  -search by firstname
