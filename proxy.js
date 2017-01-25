@@ -45,16 +45,28 @@ app.get('/', function (req, res) {
 
 app.get("/insert", function (req, res) {
 
-	res.writeHead(301,  {Location: '/'} );
-	res.end();
+	//res.writeHead(301,  {Location: '/'} );
+	//res.end();
 
+	console.log(req.query);
+
+	var fname = 'firstname='+ req.query.resp_firstname;
+	var lname = '&lastname=' + req.query.resp_lastname;
+	var age = '&age=' + req.query.resp_age;
+	var group = '&group=' + req.query.resp_group;
+	var sex = '&sex=' + req.query.resp_sex;
+
+
+
+	 var finalUrl = dwAdress + randomNumber(9500,9501) + "insert?" + fname +lname + age + group + sex;
 	request.post({
 		headers: {'content-type' : 'application/json'},
-		url:     'http://localhost:8081/insert?firstname='+ req.query.firstname +'&lastname=' + req.query.lastname + '&age=' + req.query.age + '&group=' + req.query.group + '&sex=' + req.query.sex
+		url:    finalUrl
 	}, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			// send back to client
-
+			response.writeHead(301,  {Location: '/'});
+			response.end();
 		}
 	});
 });
