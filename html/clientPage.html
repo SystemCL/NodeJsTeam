@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<title>Client Zone</title>
 	</head>
 	<body>
@@ -87,13 +88,18 @@
 								<option>FI-121</option>
 							</select>
 						</div>
-						 <label class="radio-inline">
-							<input type="radio" name="resp_type" id="inlineRadio1" value="json"> JSON
+						<label class="radio-inline">
+							<input type="radio" name="resp_sex" id="inlineRadio1" value="M"> M
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="resp_type" id="inlineRadio2" value="xml"> XML
+							<input type="radio" name="resp_sex" id="inlineRadio2" value="F"> F
 						</label>
-						 
+						 <label class="radio-inline">
+							<input type="radio" name="resp_type" id="inlineRadio3" value="json"> JSON
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="resp_type" id="inlineRadio4" value="xml"> XML
+						</label>
 						<div class="form-group">
 							<button type="submit" class="btn btn-info">Request</button>
 						</div>
