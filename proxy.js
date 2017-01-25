@@ -45,8 +45,6 @@ app.get('/', function (req, res) {
 
 app.get("/insert", function (req, res) {
 
-
-
 	console.log(req.query);
 
 	var fname = 'firstname='+ req.query.firstname;
@@ -82,8 +80,6 @@ app.get("/persons", function (req, res) {
 		var group = '&group=' + req.query.resp_group ;
 		var sex = '&sex=' + req.query.resp_sex;
 	//	var sex = '&sex=' +  ""; //req.query.resp_sex;
-
-		//console.log("######", req.query.resp_type);
 
 		// loadbalancing in one line :D
 		var finalUrl = dwAdress + randomNumber(9500,9501) + "/persons" + fname + lname + age + group + sex;
