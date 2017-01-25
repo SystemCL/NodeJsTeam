@@ -3,11 +3,10 @@ var mongodb = require('mongodb');
 var express = require('express');
 var app = express();
 
-var PORT = 8081;
-
 var mongoClient = mongodb.MongoClient;
 
 // Connection URL. This is where your mongodb server is running.
+var PORT = parseInt(process.argv.slice(2));
 var url = 'mongodb://localhost:27017/mydb';
 
 //http://localhost:8081/
@@ -29,10 +28,16 @@ app.route('/').get(function(request,response){
 // http://localhost:8081/persons
 // http://localhost:8081/persons?sex=F&group=FI-131
 app.route('/persons').get(function(request,response){
-	console.log(request.method);// pune acolo, dai run
+	console.log(request.method);
+
 	mongoClient.connect(url, function(err, db){
 		var query = require('url').parse(request.url,true).query;
-		if(query.firstname != null || query.lastname !=null || query.group != null || query.sex !=null ){
+		if(query.firstname != null ||
+			query.lastname !=null ||
+			query.group != null ||
+			query.sex !=null ||
+			query.keyUrl != null) {
+
 		//if(query.group != null || parseInt(query.age, 10) != 0 || query.firstname !=null || query.lastname !=null ){
 			var query = require('url').parse(request.url,true).query;
 			//parseInt(request.query.age, 10);

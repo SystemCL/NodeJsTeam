@@ -1,0 +1,28 @@
+//====================================================
+                        INSTALL LIB
+//====================================================
+
+    sudo npm install -g mondogb
+
+    cd /proj/dir
+    sudo npm install express
+
+    cd /proj/dir
+    sudo npm install jsontoxml
+
+    cd /proj/dir
+    sudo npm install request
+
+    cd /proj/dir
+    sudo npm install redis
+
+
+//====================================================
+                        RUN
+//====================================================
+    1 .cd /projDirectory/
+    2. sudo npm link mongodb
+    3. mongod
+    4. redis-server
+    5. runOnMac.sh
+    6. open in browser -> http:// localhost:9000

@@ -1,92 +1,97 @@
-
-//Lets require/import the HTTP module
-var http = require('http');
-var redis = require('redis');
+var jsonxml = require("jsontoxml");
+var request = require('request');
 var express = require('express');
+//var flash = require('connect-flash');
 
-client = redis.createClient();
-fs = require('fs');
+var redis = require('redis');
+var redisClient = redis.createClient();
+var app = express();
+var fs = require('fs');
+var dwAdress = "http://localhost:";
 
-//Lets define a port we want to listen to
-const PORT=8080;
-
-
-//We need a function which handles requests and send response
-function handleRequest(request, response){
-
-}
-
-/*module.exports.findPersonByFirstName = function(db, redis, firstname, callback) {
-	redis.get(firstname, function (err, reply) {
-		if (err) callback(null);
-		else if (reply)
-			callback(JSON.parse(reply));
-		else {
-			//Firstname doesn't exist in cache - we need to query the main database
-			db.collection('persons').findOne({
-				firstname: firstname
-			}, function (err, doc) {
-				if (err || !doc) callback(null);
-				else {//Person found in database, save to cache and
-					//return to client
-					redis.set(firstname, JSON.stringify(doc), function () {
-							callback(doc);
-						}
-					);
-				}
-			});
-		}
-	});
-}
-
-app.get('/persons/:firstname', function(req,res) {
-	if(!req.param('firstname')) res.status(400).send("Please send a proper firstname");
-	else {
-		access.findPersonByFirstName(db,redis,req.param('firstname'), function(person){
-			if(!person) res.status(500).send("Server error");
-			else res.status(200).send(person)
-			});
-	}
-});*/
-
-
-//Create a server
-var server = http.createServer(handleRequest);
-
-//Lets start our server
-server.listen(PORT, function(){
-	//Callback triggered when server is successfully listening. Hurray!
-	console.log("Server listening on: http://localhost:%s", PORT);
+app.listen(9000, function () {
+	console.log("proxy started on 9000!!!");
 });
 
 
+function randomNumber (low, high) {
+	return Math.floor(Math.random() * (high - low + 1) + low);
+}
 
-// nu stergeeeee !!!
+app.use(function(request, response, next) {
 
+	console.time('handler name');
+	// log each request to the console
+	console.log(request.method, request.url);
+	// continue doing what we were doing and go to the route
+	next();
+	console.timeEnd('handler name');
+	console.log("--------------------------------")
+});
 
-// put in cache
-// client.set('string key', 'Hello World', redis.print);
-// // Expire in 3 seconds
-// client.expire('string key', 3);
-// // get from
-// client.get('string key');
+app.get('/', function (req, res) {
 
-// vlad
-// faci cache numai la requesturile care cer date
-//
-//
+	fs.readFile('./html/clientPage.html', function (err, html) {
+		if (err) {
+			throw err;
+		}
+		res.writeHeader(200, {"Content-Type": "text/html"});
+		res.write(html);
+		res.end();
+	});
+});
 
-// var myReq = {
-//
-//     host: 'www.nodejitsu.com',
-//     path: '/',
-//     //since we are listening on a custom port, we need to specify it by hand
-//     port: '1337',
-//     //This is what changes the request to a POST request
-//     method: 'POST'
-// };
+app.get("/insert", function (req, res) {
 
-// http.request(myReq, function (err, res) {
-//    //ceva
-//     console.log(res);
-// });
+	res.writeHead(301,  {Location: '/'} );
+	res.end();
+
+	request.post({
+		headers: {'content-type' : 'application/json'},
+		url:     'http://localhost:8081/insert?firstname='+ req.query.firstname +'&lastname=' + req.query.lastname + '&age=' + req.query.age + '&group=' + req.query.group + '&sex=' + req.query.sex
+	}, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			// send back to client
+
+		}
+	});
+});
+
+app.get("/persons", function (req, res) {
+
+	redisClient.get(req.url, function (error, reply) {
+
+		// loadbalancing in one line :D
+		var finalUrl = dwAdress + randomNumber(9500,9501) + "/persons";
+		console.log("LOADBALANCING URL >>>>", finalUrl);
+
+		if (reply) {
+
+			console.log("data din cache: " + reply);
+			res.write(" " + redisClient.get(req.url)); //aici da true
+			res.end();
+
+		} else {
+
+			console.log("nu sunt in cache");
+			request(finalUrl, function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+
+					redisClient.set(req.url, body, redis.print);
+					redisClient.expire(req.url, 5); // is in cache fot 5 sec
+
+					var abc = jsonxml(body);
+					res.write('<html><head></head><body>');
+					res.write('<p>Respose here: </p>');
+					//res.write('<p><textarea for="responseTextarea" rows="15" cols="80">'+ parser.toXml(body, options) +'</textarea></p>');
+					// res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ jsonxml(body) +'</textarea></p>');
+					res.write('<p><textarea for="responseTextarea" rows="25" cols="120">'+ jsonxml(body) +'</textarea></p>');
+					res.end('</body></html>');
+				}
+			});
+
+		}
+	});
+
+});
+

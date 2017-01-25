@@ -1,0 +1,5 @@
+mongod &
+redis-server &
+node dw.js 9500 &
+node dw.js 9501 &
+node proxy.js
