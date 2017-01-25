@@ -26,7 +26,7 @@ app.route('/').get(function(request,response){
 });
 
 // http://localhost:8081/persons
-// http://localhost:8081/persons?sex=F&group=FI-131
+//http://localhost:9000/persons?resp_firstname=Chirica&resp_lastname=Ionela&resp_age=22&resp_group=FI-131&resp_sex=F
 app.route('/persons').get(function(request,response){
 	console.log(request.method);
 
@@ -44,45 +44,17 @@ app.route('/persons').get(function(request,response){
 			searchPath.lastname = query.lastname;
 		}
 
-
-		db.collection('persons').find( {"firstname": {$regex: ".*"+ query.firstname +".*", $options:"i"},
-			"lastname":{$regex: ".*"+ query.lastname +".*", $options:"i"}}
+        //i for case insensitive search
+		db.collection('persons').find( {"firstname": {$regex: "^"+ query.firstname +".*", $options:"i"}, //incepe cu
+										"lastname":{$regex: "^"+ query.lastname +".*", $options:"i"},
+										"age": {$regex: ".*"+ query.age +".*", $options:"i"},
+										"sex": {$regex: ".*"+ query.sex +".*", $options:"i"},
+										  }
 		).toArray(function(err, result){
 			if(err){ throw err;}
 			response.json(result);
 		});
-
-
-
 	});
-
-	/*
-	mongoClient.connect(url, function(err, db){
-		var query = require('url').parse(request.url,true).query;
-		if(query.firstname != null ||
-			query.lastname !=null ||
-			query.age != null ||
-			query.group != null ||
-			query.sex !=null ) {
-
-			var query = require('url').parse(request.url,true).query;
-			//parseInt(request.query.age, 10);
-			db.collection('persons').find({firstname:query.firstname,
-					   					   lastname:query.lastname,
-											age:query.age,
-				               	  			group:query.group,
-											sex:query.sex},
-				{}).toArray(function(err,result){
-				if(err){ throw err; } else{ response.json(result); }
-			});
-		} else {
-			db.collection('persons').find().toArray(function(err, result){
-				if(err){ throw err;}
-				response.json(result);
-			});
-		}
-	});
-	*/
 });
 
 // http://localhost:8081/persons/Balan  -search by firstname
@@ -110,13 +82,9 @@ app.route('/deleteperson/:id').delete(function(request,response){
 //it works with post method
 app.route('/insert').post(function (request, response) {
 	mongoClient.connect(url,function(err,db){
-		//Exemplu pentru a scoate date din body
-		// Get our form values. These rely on the "name" attributes
-		//var userName = request.body.username;
-		//var userEmail = request.body.useremail;
 		var firstname = request.query.firstname; //eu am pus direct string //proxy o sa trimita date
 		var lastname = request.query.lastname;
-		var age = parseInt(request.query.age, 10);
+		var age = request.query.age;
 		var sex = request.query.sex;
 		var group = request.query.group;
 		// Submit to the DB
@@ -124,8 +92,8 @@ app.route('/insert').post(function (request, response) {
 			"firstname" : firstname,
 			"lastname" : lastname,
 			"age": age,
-			"sex": sex,
-			"group": group
+			"group": group,
+			"sex": sex
 		}, function (err, doc) {
 			if (err) {
 				// If it failed, return error
@@ -139,13 +107,6 @@ app.route('/insert').post(function (request, response) {
 
 	});
 });
-
-/*
-app.post('/addUser', function(req, res){
-	console.dir(req.body);
-	res.send("test");
-});
-*/
 
 var server = app.listen(PORT,function(){
 	console.log("DataWareHouse listening on: http://localhost:%s", PORT);
