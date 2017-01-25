@@ -13,6 +13,17 @@ app.listen(9000, function () {
 	 console.log("proxy started on 9000!!!");
 });
 
+app.use(function(request, response, next) {
+
+	console.time('handler name');
+	// log each request to the console
+	console.log(request.method, request.url);
+	// continue doing what we were doing and go to the route
+	next();
+	console.timeEnd('handler name');
+	console.log("--------------------------------")
+});
+
 app.get('/', function (req, res) {
 
 		fs.readFile('./html/clientPage.html', function (err, html) {
