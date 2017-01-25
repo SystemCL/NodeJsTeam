@@ -3,6 +3,8 @@ start D:\MongoDB\Server\3.4\bin\mongod.exe --dbpath E:\univer_FI-131\Anul_IV\PAD
 
 start D:\MongoDB\Server\3.4\bin\mongo.exe
 
+start cmd.exe /k "C:\Program Files\Redis\redis-cli.exe"
+
 
 // mac device
 
