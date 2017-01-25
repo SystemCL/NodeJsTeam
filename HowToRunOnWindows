@@ -1,0 +1,21 @@
+//====================================================
+                        INSTALL LIB
+//====================================================
+Hint: Alt+F12 for WebStorm opens terminal
+    1. Change your directory where project is stored: cd /project/myproject
+    2. Type all commands for install modules required for project:
+          npm install mongodb
+          npm install express
+          npm install jsontoxml
+          npm install request
+          npm install redis
+
+//====================================================
+                        RUN
+//====================================================
+    Hint: Alt+F12 for WebStorm opens terminal
+    1. Open with an text editor batch file runWindows.bat
+    1. Change all directories in batch file runWindows.bat according to your installation directories of redis, mongo...
+    2. Save all changes on batch file
+    3. Run batch file: runWindows.bat by double click
+
