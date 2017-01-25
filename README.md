@@ -13,7 +13,8 @@ Team:
 	- express
 	- mongodb (module and install into system)
 	- redis (module and install into system)
-	- http
+	- request
+	- jsontoxml
 
 ###How to install:###
 	
@@ -24,7 +25,8 @@ Team:
 	- express - install this package with npm using terminal. Ex: npm install express
 	- mongodb - install this package with npm using terminal. Ex: npm install mongodb
 	- redis - install this package with npm using terminal. Ex: npm install redis
-	- http - install this package with npm using terminal. Ex: npm instal http
+	- request - install this package with npm using terminal. Ex: npm install request
+	- jsontoxml - install this package with npm using terminal. Ex: npm install jsontoxml
 	- Also, you will need to install MongoDB on your OS: [https://www.mongodb.com/download-center] choose install package according your OS, after that install it.
 	- You will need to install Redis on your OS: [https://redis.io/download]
 	choose install package according your OS, after that install it.
@@ -32,13 +34,15 @@ Team:
 
 
 
-###Running project###
+###How to run project###
 
-*	1) (For Windows) Run redis-cli.exe
-*	2) (For Windows) In cmd: "path_where_installed_MongoDB/mongod.exe" --dbpath "path_to_project/data"
-*	3) (For Windows) In another cmd: path_where_installed_MongoDB/mongo.exe
-    - Here, in terminal, you must create database: use mydb
-    - Next, you will need to fill MongoDB database, so, you can go to supportFiles and copy all content of database.txt into terminal mongo.exe
-*   4) Run Datawarehouse using terminal: node dw.js
-*   5) Run Proxy: node proxy.js
-*   6) Open your browser, and type http://localhost/persons/   
+*	1)  According to your OS, you should open and read HowToRunOnMac/HowToRunOnWindows files
+*	2)  After that, you should start file runMac: sh runMac (if your OS is from MAC)
+*   3)  If you use Windows OS, you should open runWindows.bat with an text editor and edit all directories locations(save changes)
+*   4)  After point 3, you will be able to run the file runWindows.bat by double click on it
+*   5)  Enter into your broswer next url: http://localhost:9000/
+*   6)  Choose between Insert form and Request form and fill text areas, after that press button Insert/Request
+*   7)  In case of Request form the result is displayed on another page
+*   8)  In case of Insert form, the result is an reload of page that tells you if data was inserted
+
+Attention: If you have some troubles with running on ports that are already in use,(for OSX) use command: killAll node
