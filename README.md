@@ -1,5 +1,5 @@
 # NodeJsTeam
-###Proxy server with load balancing + datawarehouse###
+###Proxy server with caching, load balancing + Datawarehouse###
 ======================================================
 Team:
 -	Ploaia Vladislav
