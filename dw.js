@@ -50,6 +50,7 @@ app.route('/persons').get(function(request,response){
 										"age": {$regex: ".*"+ query.age +".*", $options:"i"},
 										"sex": {$regex: ".*"+ query.sex +".*", $options:"i"},
 										  }
+
 		).toArray(function(err, result){
 			if(err){ throw err;}
 			response.json(result);
@@ -65,16 +66,6 @@ app.route("/persons/:firstname").get(function(request, response) {
 				throw err;
 			}
 			response.json(result);
-		});
-	});
-});
-
-//not work yet
-app.route('/deleteperson/:id').delete(function(request,response){
-	mongoClient.connect(url, function(err,db){
-		var personToDelete = request.params.id;
-		db.collection('persons').remove({ '_id':personToDelete}, function(err){
-			response.send((err === null) ? {msg: ''} : {msg:'error: '+err});
 		});
 	});
 });
